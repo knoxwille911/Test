@@ -19,6 +19,16 @@
     return transferManager;
 }
 
+
+- (id<WTLoggerReaderProtocol>)loggerReader {
+    static id<WTLoggerReaderProtocol> logger = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        logger = [[WTLoggerReader alloc] init];
+    });
+    return logger;
+}
+
 @end
 
 WTInjectorContainer *injectorContainer() {

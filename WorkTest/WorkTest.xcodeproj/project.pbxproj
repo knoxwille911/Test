@@ -19,6 +19,7 @@
 		E2206BD2206B6FE800085F27 /* WTConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BD1206B6FE800085F27 /* WTConfiguration.m */; };
 		E2206BD6206B7F1B00085F27 /* WTInjectorContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BD5206B7F1B00085F27 /* WTInjectorContainer.m */; };
 		E2206BDD206B7FD200085F27 /* WTTransferManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BDC206B7FD200085F27 /* WTTransferManager.m */; };
+		E2206BE4206BA95900085F27 /* WTLoggerReader.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BE3206BA95900085F27 /* WTLoggerReader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,9 @@
 		E2206BD8206B7F8A00085F27 /* WTTransferManagerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTTransferManagerProtocol.h; sourceTree = "<group>"; };
 		E2206BDB206B7FD200085F27 /* WTTransferManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTTransferManager.h; sourceTree = "<group>"; };
 		E2206BDC206B7FD200085F27 /* WTTransferManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTTransferManager.m; sourceTree = "<group>"; };
+		E2206BDF206B9E8500085F27 /* WTLoggerReaderProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTLoggerReaderProtocol.h; sourceTree = "<group>"; };
+		E2206BE2206BA95900085F27 /* WTLoggerReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTLoggerReader.h; sourceTree = "<group>"; };
+		E2206BE3206BA95900085F27 /* WTLoggerReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTLoggerReader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +165,7 @@
 		E2206BD3206B7ED400085F27 /* Injections */ = {
 			isa = PBXGroup;
 			children = (
+				E2206BDE206B9E6700085F27 /* WTLoggerReader */,
 				E2206BD7206B7F5E00085F27 /* WTTransferManager */,
 				E2206BD4206B7F1B00085F27 /* WTInjectorContainer.h */,
 				E2206BD5206B7F1B00085F27 /* WTInjectorContainer.m */,
@@ -176,6 +181,16 @@
 				E2206BD8206B7F8A00085F27 /* WTTransferManagerProtocol.h */,
 			);
 			path = WTTransferManager;
+			sourceTree = "<group>";
+		};
+		E2206BDE206B9E6700085F27 /* WTLoggerReader */ = {
+			isa = PBXGroup;
+			children = (
+				E2206BE2206BA95900085F27 /* WTLoggerReader.h */,
+				E2206BE3206BA95900085F27 /* WTLoggerReader.m */,
+				E2206BDF206B9E8500085F27 /* WTLoggerReaderProtocol.h */,
+			);
+			path = WTLoggerReader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2206B9F206B6B9700085F27 /* ViewController.m in Sources */,
+				E2206BE4206BA95900085F27 /* WTLoggerReader.m in Sources */,
 				E2206BAA206B6B9800085F27 /* main.m in Sources */,
 				E2206BD2206B6FE800085F27 /* WTConfiguration.m in Sources */,
 				E2206BCF206B6E0300085F27 /* UIColors+WTColors.m in Sources */,

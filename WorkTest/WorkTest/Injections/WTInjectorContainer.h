@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "WTTransferManager.h"
+#import "WTLoggerReader.h"
 
 @interface WTInjectorContainer : NSObject<WTTransferManagerInjection>
 
 - (id<WTTransferManagerProtocol>)transferManager;
+- (id<WTLoggerReaderProtocol>)loggerReader;
 
 @end
 

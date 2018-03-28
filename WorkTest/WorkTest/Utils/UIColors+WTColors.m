@@ -29,6 +29,10 @@
 }
 
 
++(UIColor *)urlTextViewTextColor {
+    return UIColorFromRGB(0x6b6b6b);
+}
+
 #pragma mark - resultTextView color
 
 +(UIColor *)resultTextViewBackgroundColor {
@@ -43,6 +47,28 @@
 
 +(UIColor *)resultTextViewBorderColor {
     return UIColorFromRGB(0x325883);
+}
+
+
+#pragma mark - filter color
+
++(UIColor *)filterFieldBackgroundColor {
+    return UIColorFromRGB(0xe8e8e8);
+}
+
+
++(UIColor *)filterFieldTextColor {
+    return UIColorFromRGB(0x6b6b6b);
+}
+
+
++(UIColor *)filterFieldBorderColor {
+    return UIColorFromRGB(0x325883);
+}
+
+
++(UIColor *)filterTextViewTextColor {
+    return UIColorFromRGB(0x6b6b6b);
 }
 
 @end

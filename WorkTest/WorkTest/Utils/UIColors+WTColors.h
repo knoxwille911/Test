@@ -16,6 +16,15 @@
 +(UIColor *)urlFieldTextColor;
 +(UIColor *)urlFieldBorderColor;
 
++(UIColor *)urlTextViewTextColor;
+
+#pragma mark - filter color
+
++(UIColor *)filterFieldBackgroundColor;
++(UIColor *)filterFieldTextColor;
++(UIColor *)filterFieldBorderColor;
+
++(UIColor *)filterTextViewTextColor;
 
 #pragma mark - resultTextView color
 

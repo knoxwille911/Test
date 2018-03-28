@@ -14,4 +14,9 @@
     return @"http://www.sample-videos.com/text/Sample-text-file-1000kb.txt";
 }
 
+
++(NSString *)defaultFilter {
+    return @"*abc";
+}
+
 @end

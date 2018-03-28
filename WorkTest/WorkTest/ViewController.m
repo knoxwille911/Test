@@ -12,8 +12,11 @@
 #import "WTInjectorContainer.h"
 #import "WTTransferManager.h"
 
+static const CGFloat kViewsLeftOffset = 15;
+
 @interface ViewController ()<UITextFieldDelegate> {
     UITextField *_urlTextField;
+    UITextField *_filterTextField;
     UITextView *_resultTextView;
     UIButton *_startButton;
 }
@@ -31,12 +34,33 @@
 
 -(void)setupView {
     [self setupURLTextField];
-    [self setupResultTextView];
+    [self setupFilterView];
     [self setupStartButton];
+    [self setupResultTextView];
 }
 
 
 -(void)setupURLTextField {
+    
+//    UILabel *label = [[UILabel new] autorelease];
+    UILabel *label = [UILabel new];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    [label setFont:[UIFont systemFontOfSize:16.f]];
+    [label setText:NSLocalizedString(@"URL:", @"URL:")];
+    label.textColor = UIColor.urlTextViewTextColor;
+    [self.view addSubview:label];
+    
+    NSLayoutYAxisAnchor *topAnchor = nil;
+    if (@available(iOS 11, *)) {
+        topAnchor = self.view.safeAreaLayoutGuide.topAnchor;
+    } else {
+        topAnchor = self.topLayoutGuide.bottomAnchor;
+    }
+    
+    [label.topAnchor constraintEqualToAnchor:topAnchor constant:25.f].active = YES;
+    [label.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:kViewsLeftOffset].active = YES;
+    [label.heightAnchor constraintEqualToConstant:32.f].active = YES;
+    
     _urlTextField = [[UITextField new] autorelease];
     UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 5.f, 0.f)];
     indentView.backgroundColor = UIColor.clearColor;
@@ -56,36 +80,70 @@
     _urlTextField.borderStyle = UITextBorderStyleNone;
     [self.view addSubview:_urlTextField];
     
-    NSLayoutYAxisAnchor *topAnchor = nil;
-    if (@available(iOS 11, *)) {
-        topAnchor = self.view.safeAreaLayoutGuide.topAnchor;
-    } else {
-        topAnchor = self.topLayoutGuide.bottomAnchor;
-    }
-    
-    [_urlTextField.topAnchor constraintEqualToAnchor:topAnchor constant:5.f].active = YES;
-    [_urlTextField.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:15.f].active = YES;
+    [_urlTextField.centerYAnchor constraintEqualToAnchor:label.centerYAnchor constant:0].active = YES;
+    [_urlTextField.leadingAnchor constraintEqualToAnchor:label.trailingAnchor constant:15.f].active = YES;
     [_urlTextField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-15.f].active = YES;
     [_urlTextField.heightAnchor constraintEqualToConstant:32.f].active = YES;
 }
 
 
--(void)setupResultTextView {
-    _startButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [_startButton setTitle:@"GO" forState:UIControlStateNormal];
-    [_startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _startButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_startButton];
+-(void)setupFilterView {
+    UILabel *label = [[UILabel new] autorelease];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    [label setFont:[UIFont systemFontOfSize:16.f]];
+    [label setText:NSLocalizedString(@"Filter:", @"Filter:")];
+    label.textColor = UIColor.filterTextViewTextColor;
+    [self.view addSubview:label];
     
-    [_startButton.topAnchor constraintEqualToAnchor:_urlTextField.bottomAnchor constant:5.f].active = YES;
-    [_startButton.centerXAnchor constraintEqualToAnchor:_urlTextField.centerXAnchor constant:5.f].active = YES;
-    [_startButton addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
+    [label.topAnchor constraintEqualToAnchor:_urlTextField.bottomAnchor constant:25.f].active = YES;
+    [label.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:kViewsLeftOffset].active = YES;
+    
+    _filterTextField = [[UITextField new] autorelease];
+    UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 5.f, 0.f)];
+    indentView.backgroundColor = UIColor.clearColor;
+    _filterTextField.leftView = indentView;
+    _filterTextField.leftViewMode = UITextFieldViewModeAlways;
+    _filterTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    _filterTextField.spellCheckingType = UITextSpellCheckingTypeNo;
+    _filterTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _filterTextField.backgroundColor = UIColor.urlFieldBackgroundColor;
+    _filterTextField.textColor = UIColor.urlFieldTextColor;
+    _filterTextField.tintColor = UIColor.urlFieldTextColor;
+    _filterTextField.layer.borderWidth = 1.f;
+    _filterTextField.layer.cornerRadius = 5.f;
+    _filterTextField.layer.borderColor = UIColor.urlFieldBorderColor.CGColor;
+    _filterTextField.text = [WTConfiguration defaultFilter];
+    [_filterTextField setFont:[UIFont systemFontOfSize:16.f]];
+    _filterTextField.borderStyle = UITextBorderStyleNone;
+    [self.view addSubview:_filterTextField];
+    
+    [_filterTextField.centerYAnchor constraintEqualToAnchor:label.centerYAnchor constant:0].active = YES;
+    [_filterTextField.leadingAnchor constraintEqualToAnchor:label.trailingAnchor constant:15.f].active = YES;
+    [_filterTextField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-15.f].active = YES;
+    [_filterTextField.heightAnchor constraintEqualToConstant:32.f].active = YES;
 }
 
 
 -(void)setupStartButton {
-    _resultTextView = [UITextView new];
-    _resultTextView = [UITextView new];
+    _startButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_startButton setTitle:@"GO" forState:UIControlStateNormal];
+    [_startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _startButton.translatesAutoresizingMaskIntoConstraints = NO;
+    _startButton.layer.borderWidth = 1.f;
+    _startButton.layer.cornerRadius = 5.f;
+    _startButton.layer.borderColor = UIColor.urlFieldBorderColor.CGColor;
+    [self.view addSubview:_startButton];
+    
+    [_startButton.topAnchor constraintEqualToAnchor:_filterTextField.bottomAnchor constant:5.f].active = YES;
+    [_startButton.centerXAnchor constraintEqualToAnchor:_urlTextField.centerXAnchor constant:5.f].active = YES;
+    [_startButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:15.f].active = YES;
+    [_startButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-15.f].active = YES;
+    [_startButton addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
+}
+
+
+-(void)setupResultTextView {
+    _resultTextView = [[UITextView new] autorelease];
     _resultTextView.translatesAutoresizingMaskIntoConstraints = NO;
     _resultTextView.backgroundColor = [UIColor resultTextViewBackgroundColor];
     _resultTextView.textColor = [UIColor resultTextViewTextColor];
@@ -120,12 +178,5 @@
         
     }];
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 @end

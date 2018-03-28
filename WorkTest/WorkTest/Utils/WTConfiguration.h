@@ -11,5 +11,6 @@
 @interface WTConfiguration : NSObject
 
 +(NSString *)textDownloadDefaultURL;
++(NSString *)defaultFilter;
 
 @end

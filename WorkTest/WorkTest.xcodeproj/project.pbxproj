@@ -19,7 +19,8 @@
 		E2206BD2206B6FE800085F27 /* WTConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BD1206B6FE800085F27 /* WTConfiguration.m */; };
 		E2206BD6206B7F1B00085F27 /* WTInjectorContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BD5206B7F1B00085F27 /* WTInjectorContainer.m */; };
 		E2206BDD206B7FD200085F27 /* WTTransferManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BDC206B7FD200085F27 /* WTTransferManager.m */; };
-		E2206BE4206BA95900085F27 /* WTLoggerReader.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BE3206BA95900085F27 /* WTLoggerReader.m */; };
+		E2206BE4206BA95900085F27 /* WTLoggerReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = E2206BE3206BA95900085F27 /* WTLoggerReader.mm */; };
+		E2206BE8206BAA4500085F27 /* CLogReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2206BE6206BAA4500085F27 /* CLogReader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +68,9 @@
 		E2206BDC206B7FD200085F27 /* WTTransferManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTTransferManager.m; sourceTree = "<group>"; };
 		E2206BDF206B9E8500085F27 /* WTLoggerReaderProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTLoggerReaderProtocol.h; sourceTree = "<group>"; };
 		E2206BE2206BA95900085F27 /* WTLoggerReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTLoggerReader.h; sourceTree = "<group>"; };
-		E2206BE3206BA95900085F27 /* WTLoggerReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTLoggerReader.m; sourceTree = "<group>"; };
+		E2206BE3206BA95900085F27 /* WTLoggerReader.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WTLoggerReader.mm; sourceTree = "<group>"; };
+		E2206BE6206BAA4500085F27 /* CLogReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CLogReader.cpp; sourceTree = "<group>"; };
+		E2206BE7206BAA4500085F27 /* CLogReader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CLogReader.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,11 +189,21 @@
 		E2206BDE206B9E6700085F27 /* WTLoggerReader */ = {
 			isa = PBXGroup;
 			children = (
+				E2206BE5206BAA0000085F27 /* CLogReader */,
 				E2206BE2206BA95900085F27 /* WTLoggerReader.h */,
-				E2206BE3206BA95900085F27 /* WTLoggerReader.m */,
+				E2206BE3206BA95900085F27 /* WTLoggerReader.mm */,
 				E2206BDF206B9E8500085F27 /* WTLoggerReaderProtocol.h */,
 			);
 			path = WTLoggerReader;
+			sourceTree = "<group>";
+		};
+		E2206BE5206BAA0000085F27 /* CLogReader */ = {
+			isa = PBXGroup;
+			children = (
+				E2206BE6206BAA4500085F27 /* CLogReader.cpp */,
+				E2206BE7206BAA4500085F27 /* CLogReader.hpp */,
+			);
+			path = CLogReader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,13 +340,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2206B9F206B6B9700085F27 /* ViewController.m in Sources */,
-				E2206BE4206BA95900085F27 /* WTLoggerReader.m in Sources */,
+				E2206BE4206BA95900085F27 /* WTLoggerReader.mm in Sources */,
 				E2206BAA206B6B9800085F27 /* main.m in Sources */,
 				E2206BD2206B6FE800085F27 /* WTConfiguration.m in Sources */,
 				E2206BCF206B6E0300085F27 /* UIColors+WTColors.m in Sources */,
 				E2206BD6206B7F1B00085F27 /* WTInjectorContainer.m in Sources */,
 				E2206BDD206B7FD200085F27 /* WTTransferManager.m in Sources */,
 				E2206B9C206B6B9600085F27 /* AppDelegate.m in Sources */,
+				E2206BE8206BAA4500085F27 /* CLogReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

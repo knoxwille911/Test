@@ -11,7 +11,7 @@
 @protocol WTLoggerReaderProtocol<NSObject>
 
 -(bool)setFilter:(NSString *)filter;
--(bool)addSourceBlock:(NSString *)block blockSize:(NSInteger)blockSize;
--(bool)getNextLine:(NSString *)line lineSize:(NSInteger)lineSize;
+-(bool)addSourceBlock:(NSString *)block blockSize:(NSNumber *)blockSize;
+-(bool)getNextLine:(NSString *)line lineSize:(NSNumber *)lineSize;
 
 @end

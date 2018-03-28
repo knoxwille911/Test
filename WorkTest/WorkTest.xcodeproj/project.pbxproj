@@ -15,6 +15,10 @@
 		E2206BAA206B6B9800085F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BA9206B6B9800085F27 /* main.m */; };
 		E2206BB4206B6B9800085F27 /* WorkTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BB3206B6B9800085F27 /* WorkTestTests.m */; };
 		E2206BBF206B6B9900085F27 /* WorkTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BBE206B6B9900085F27 /* WorkTestUITests.m */; };
+		E2206BCF206B6E0300085F27 /* UIColors+WTColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BCE206B6E0300085F27 /* UIColors+WTColors.m */; };
+		E2206BD2206B6FE800085F27 /* WTConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BD1206B6FE800085F27 /* WTConfiguration.m */; };
+		E2206BD6206B7F1B00085F27 /* WTInjectorContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BD5206B7F1B00085F27 /* WTInjectorContainer.m */; };
+		E2206BDD206B7FD200085F27 /* WTTransferManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BDC206B7FD200085F27 /* WTTransferManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,15 @@
 		E2206BBA206B6B9900085F27 /* WorkTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2206BBE206B6B9900085F27 /* WorkTestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkTestUITests.m; sourceTree = "<group>"; };
 		E2206BC0206B6B9900085F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2206BCD206B6E0300085F27 /* UIColors+WTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColors+WTColors.h"; sourceTree = "<group>"; };
+		E2206BCE206B6E0300085F27 /* UIColors+WTColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColors+WTColors.m"; sourceTree = "<group>"; };
+		E2206BD0206B6FE800085F27 /* WTConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTConfiguration.h; sourceTree = "<group>"; };
+		E2206BD1206B6FE800085F27 /* WTConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTConfiguration.m; sourceTree = "<group>"; };
+		E2206BD4206B7F1B00085F27 /* WTInjectorContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTInjectorContainer.h; sourceTree = "<group>"; };
+		E2206BD5206B7F1B00085F27 /* WTInjectorContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTInjectorContainer.m; sourceTree = "<group>"; };
+		E2206BD8206B7F8A00085F27 /* WTTransferManagerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTTransferManagerProtocol.h; sourceTree = "<group>"; };
+		E2206BDB206B7FD200085F27 /* WTTransferManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTTransferManager.h; sourceTree = "<group>"; };
+		E2206BDC206B7FD200085F27 /* WTTransferManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTTransferManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +114,8 @@
 		E2206B99206B6B9500085F27 /* WorkTest */ = {
 			isa = PBXGroup;
 			children = (
+				E2206BD3206B7ED400085F27 /* Injections */,
+				E2206BCC206B6DE800085F27 /* Utils */,
 				E2206B9A206B6B9500085F27 /* AppDelegate.h */,
 				E2206B9B206B6B9600085F27 /* AppDelegate.m */,
 				E2206B9D206B6B9600085F27 /* ViewController.h */,
@@ -130,6 +145,37 @@
 				E2206BC0206B6B9900085F27 /* Info.plist */,
 			);
 			path = WorkTestUITests;
+			sourceTree = "<group>";
+		};
+		E2206BCC206B6DE800085F27 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E2206BCD206B6E0300085F27 /* UIColors+WTColors.h */,
+				E2206BCE206B6E0300085F27 /* UIColors+WTColors.m */,
+				E2206BD0206B6FE800085F27 /* WTConfiguration.h */,
+				E2206BD1206B6FE800085F27 /* WTConfiguration.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		E2206BD3206B7ED400085F27 /* Injections */ = {
+			isa = PBXGroup;
+			children = (
+				E2206BD7206B7F5E00085F27 /* WTTransferManager */,
+				E2206BD4206B7F1B00085F27 /* WTInjectorContainer.h */,
+				E2206BD5206B7F1B00085F27 /* WTInjectorContainer.m */,
+			);
+			path = Injections;
+			sourceTree = "<group>";
+		};
+		E2206BD7206B7F5E00085F27 /* WTTransferManager */ = {
+			isa = PBXGroup;
+			children = (
+				E2206BDB206B7FD200085F27 /* WTTransferManager.h */,
+				E2206BDC206B7FD200085F27 /* WTTransferManager.m */,
+				E2206BD8206B7F8A00085F27 /* WTTransferManagerProtocol.h */,
+			);
+			path = WTTransferManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,6 +313,10 @@
 			files = (
 				E2206B9F206B6B9700085F27 /* ViewController.m in Sources */,
 				E2206BAA206B6B9800085F27 /* main.m in Sources */,
+				E2206BD2206B6FE800085F27 /* WTConfiguration.m in Sources */,
+				E2206BCF206B6E0300085F27 /* UIColors+WTColors.m in Sources */,
+				E2206BD6206B7F1B00085F27 /* WTInjectorContainer.m in Sources */,
+				E2206BDD206B7FD200085F27 /* WTTransferManager.m in Sources */,
 				E2206B9C206B6B9600085F27 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,9 +482,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NDNK64YJ57;
 				INFOPLIST_FILE = WorkTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AntonK.WorkTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.darmatterab.PEN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -446,9 +498,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NDNK64YJ57;
 				INFOPLIST_FILE = WorkTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AntonK.WorkTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.darmatterab.PEN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -11,6 +11,9 @@
 #import "WTConfiguration.h"
 #import "WTInjectorContainer.h"
 #import "WTTransferManager.h"
+#import "WTLoadingBanner.h"
+#import "WTRedBanner.h"
+#import "ViewController+Banners.h"
 
 static const CGFloat kViewsLeftOffset = 15;
 
@@ -19,6 +22,7 @@ static const CGFloat kViewsLeftOffset = 15;
     UITextField *_filterTextField;
     UITextView *_resultTextView;
     UIButton *_startButton;
+    UIImageView *_backgroundImageView;
 }
 
 @end
@@ -33,6 +37,11 @@ static const CGFloat kViewsLeftOffset = 15;
 
 
 -(void)setupView {
+    
+    _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Background-menu"]];
+    _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_backgroundImageView];
+    
     [self setupURLTextField];
     [self setupFilterView];
     [self setupStartButton];
@@ -41,14 +50,12 @@ static const CGFloat kViewsLeftOffset = 15;
 
 
 -(void)setupURLTextField {
-    
-//    UILabel *label = [[UILabel new] autorelease];
-    UILabel *label = [UILabel new];
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    [label setFont:[UIFont systemFontOfSize:16.f]];
-    [label setText:NSLocalizedString(@"URL:", @"URL:")];
-    label.textColor = UIColor.urlTextViewTextColor;
-    [self.view addSubview:label];
+    UILabel *urlLabel = [[UILabel new] autorelease];
+    urlLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [urlLabel setFont:[UIFont systemFontOfSize:16.f]];
+    [urlLabel setText:NSLocalizedString(@"URL:", @"URL:")];
+    urlLabel.textColor = UIColor.urlTextViewTextColor;
+    [self.view addSubview:urlLabel];
     
     NSLayoutYAxisAnchor *topAnchor = nil;
     if (@available(iOS 11, *)) {
@@ -57,14 +64,14 @@ static const CGFloat kViewsLeftOffset = 15;
         topAnchor = self.topLayoutGuide.bottomAnchor;
     }
     
-    [label.topAnchor constraintEqualToAnchor:topAnchor constant:25.f].active = YES;
-    [label.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:kViewsLeftOffset].active = YES;
-    [label.heightAnchor constraintEqualToConstant:32.f].active = YES;
-    
+    [urlLabel.topAnchor constraintEqualToAnchor:topAnchor constant:25.f].active = YES;
+    [urlLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:kViewsLeftOffset].active = YES;
+
     _urlTextField = [[UITextField new] autorelease];
     UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 5.f, 0.f)];
     indentView.backgroundColor = UIColor.clearColor;
     _urlTextField.leftView = indentView;
+    _urlTextField.delegate = self;
     _urlTextField.leftViewMode = UITextFieldViewModeAlways;
     _urlTextField.translatesAutoresizingMaskIntoConstraints = NO;
     _urlTextField.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -76,12 +83,13 @@ static const CGFloat kViewsLeftOffset = 15;
     _urlTextField.layer.cornerRadius = 5.f;
     _urlTextField.layer.borderColor = UIColor.urlFieldBorderColor.CGColor;
     _urlTextField.text = [WTConfiguration textDownloadDefaultURL];
+    _urlTextField.returnKeyType = UIReturnKeyDone;
     [_urlTextField setFont:[UIFont systemFontOfSize:16.f]];
     _urlTextField.borderStyle = UITextBorderStyleNone;
     [self.view addSubview:_urlTextField];
     
-    [_urlTextField.centerYAnchor constraintEqualToAnchor:label.centerYAnchor constant:0].active = YES;
-    [_urlTextField.leadingAnchor constraintEqualToAnchor:label.trailingAnchor constant:15.f].active = YES;
+    [_urlTextField.centerYAnchor constraintEqualToAnchor:urlLabel.centerYAnchor constant:0].active = YES;
+    [_urlTextField.leadingAnchor constraintEqualToAnchor:urlLabel.trailingAnchor constant:15.f].active = YES;
     [_urlTextField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-15.f].active = YES;
     [_urlTextField.heightAnchor constraintEqualToConstant:32.f].active = YES;
 }
@@ -115,10 +123,12 @@ static const CGFloat kViewsLeftOffset = 15;
     _filterTextField.text = [WTConfiguration defaultFilter];
     [_filterTextField setFont:[UIFont systemFontOfSize:16.f]];
     _filterTextField.borderStyle = UITextBorderStyleNone;
+    _filterTextField.returnKeyType = UIReturnKeyDone;
+    _filterTextField.delegate = self;
     [self.view addSubview:_filterTextField];
     
     [_filterTextField.centerYAnchor constraintEqualToAnchor:label.centerYAnchor constant:0].active = YES;
-    [_filterTextField.leadingAnchor constraintEqualToAnchor:label.trailingAnchor constant:15.f].active = YES;
+    [_filterTextField.leadingAnchor constraintEqualToAnchor:_urlTextField.leadingAnchor constant:0.f].active = YES;
     [_filterTextField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-15.f].active = YES;
     [_filterTextField.heightAnchor constraintEqualToConstant:32.f].active = YES;
 }
@@ -127,7 +137,7 @@ static const CGFloat kViewsLeftOffset = 15;
 -(void)setupStartButton {
     _startButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_startButton setTitle:@"GO" forState:UIControlStateNormal];
-    [_startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_startButton setTitleColor:[UIColor startButtonTextColor] forState:UIControlStateNormal];
     _startButton.translatesAutoresizingMaskIntoConstraints = NO;
     _startButton.layer.borderWidth = 1.f;
     _startButton.layer.cornerRadius = 5.f;
@@ -135,7 +145,7 @@ static const CGFloat kViewsLeftOffset = 15;
     [self.view addSubview:_startButton];
     
     [_startButton.topAnchor constraintEqualToAnchor:_filterTextField.bottomAnchor constant:5.f].active = YES;
-    [_startButton.centerXAnchor constraintEqualToAnchor:_urlTextField.centerXAnchor constant:5.f].active = YES;
+    [_startButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor constant:0.f].active = YES;
     [_startButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:15.f].active = YES;
     [_startButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-15.f].active = YES;
     [_startButton addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
@@ -173,10 +183,28 @@ static const CGFloat kViewsLeftOffset = 15;
 }
 
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
 -(void)buttonTap {
-    [injectorContainer().transferManager addDownloadTaskWithURL:_urlTextField.text handler:^(NSString *downloadedString, WTTransferManagerTaskState state, NSError *error) {
-        
-    }];
+    WTTransferManagerDownloadingHandler handler = [^(NSString *downloadedString, WTTransferManagerTaskState state, NSError *error) {
+        if (state == WTTransferManagerTaskStateRunning) {
+            [self hideErrorBanner];
+            [self showLoadingBanner];
+        }
+        if (state == WTTransferManagerTaskStateError) {
+            [self hideLoadingBanner];
+            [self showErrorBanner];
+        }
+        if (state == WTTransferManagerTaskStateComplete) {
+            [self hideLoadingBanner];
+            [self hideErrorBanner];
+        }
+    } copy];
+    [injectorContainer().transferManager addDownloadTaskWithURL:_urlTextField.text handler:handler];
 }
 
 @end

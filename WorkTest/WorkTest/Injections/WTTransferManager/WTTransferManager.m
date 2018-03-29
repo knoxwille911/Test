@@ -58,30 +58,40 @@
 -(void)URLSession:(NSURLSession *)session
              task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskIdentifier == %d", task.taskIdentifier];
-    NSArray<NSURLSessionTask *> *filteredArray = [[NSArray arrayWithArray:_activeTasks] filteredArrayUsingPredicate:predicate];
-    if (filteredArray.count) {
-        if (error) {
-            WTTransferManagerDownloadingHandler neededHandler = [_handlers objectForKey:@(filteredArray.firstObject.taskIdentifier)];
-            neededHandler(nil, error ? WTTransferManagerTaskStateError : WTTransferManagerTaskStateComplete, error);
+    if (error) {
+        WTTransferManagerDownloadingHandler handler = [self neededHandlerForSessionTask:task];
+        if (handler) {
+            handler(nil, WTTransferManagerTaskStateError, error);
         }
-        [_activeTasks removeObjectsInArray:filteredArray];
-        [_handlers removeObjectForKey:@(filteredArray.firstObject.taskIdentifier)];
+        [self removeHandlerForTask:task];
     }
 }
 
 
 -(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskIdentifier == %d", dataTask.taskIdentifier];
-    
-    NSString* dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-    
-    NSArray<NSURLSessionTask *> *filteredArray = [[NSArray arrayWithArray:_activeTasks] filteredArrayUsingPredicate:predicate];
-    if (filteredArray.count) {
-        WTTransferManagerDownloadingHandler neededHandler = [_handlers objectForKey:@(filteredArray.firstObject.taskIdentifier)];
-        neededHandler(dataStr, WTTransferManagerTaskStateRunning, nil);
+    WTTransferManagerDownloadingHandler handler = [self neededHandlerForSessionTask:dataTask];
+    if (handler) {
+        NSString* dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        if (dataTask.countOfBytesReceived >= dataTask.countOfBytesExpectedToReceive) {
+            handler(dataStr, WTTransferManagerTaskStateComplete, nil);
+            [self removeHandlerForTask:dataTask];
+        }
+        else {
+            handler(dataStr, WTTransferManagerTaskStateRunning, nil);
+        }
     }
 }
+
+
+-(void)removeHandlerForTask:(NSURLSessionTask *)task {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskIdentifier == %d", task.taskIdentifier];
+    NSArray<NSURLSessionTask *> *filteredArray = [[NSArray arrayWithArray:_activeTasks] filteredArrayUsingPredicate:predicate];
+    if (filteredArray.count) {
+        [_activeTasks removeObjectsInArray:filteredArray];
+        [_handlers removeObjectForKey:@(filteredArray.firstObject.taskIdentifier)];
+    }
+}
+
 
 
 -(WTTransferManagerDownloadingHandler)neededHandlerForSessionTask:(NSURLSessionTask *)sessionTask {

@@ -32,4 +32,13 @@
 +(UIColor *)resultTextViewTextColor;
 +(UIColor *)resultTextViewBorderColor;
 
+#pragma mark - resultTextView color
+
++(UIColor *)startButtonTextColor;
+
+#pragma mark - Banners
+
++(UIColor *)redBannerColor;
++(UIColor *)blueBannerColor;
+
 @end

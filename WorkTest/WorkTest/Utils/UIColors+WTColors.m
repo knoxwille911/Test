@@ -30,7 +30,7 @@
 
 
 +(UIColor *)urlTextViewTextColor {
-    return UIColorFromRGB(0x6b6b6b);
+    return UIColorFromRGB(0xffffff);
 }
 
 #pragma mark - resultTextView color
@@ -41,7 +41,7 @@
 
 
 +(UIColor *)resultTextViewTextColor {
-    return UIColorFromRGB(0x6b6b6b);
+    return UIColorFromRGB(0x000000);
 }
 
 
@@ -68,7 +68,24 @@
 
 
 +(UIColor *)filterTextViewTextColor {
-    return UIColorFromRGB(0x6b6b6b);
+    return UIColorFromRGB(0xffffff);
+}
+
+#pragma mark - resultTextView color
+
++(UIColor *)startButtonTextColor {
+    return UIColorFromRGB(0xffffff);
+}
+
+#pragma mark - Banners
+
++(UIColor *)redBannerColor {
+    return UIColorFromRGB(0xac2020);
+}
+
+
++(UIColor *)blueBannerColor {
+    return UIColorFromRGB(0x3c699a);
 }
 
 @end

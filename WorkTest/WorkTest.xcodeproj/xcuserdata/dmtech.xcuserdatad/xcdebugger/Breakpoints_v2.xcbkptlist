@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WorkTest/Utils/Banners/UIViewController+Banners.m"
-            timestampString = "544014305.842721"
+            timestampString = "544023720.8762569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
             endingLineNumber = "63"
             landmarkName = "-showBanner:autoHiding:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WorkTest/Injections/WTLoggerReader/CLogReader/CLogReader.cpp"
+            timestampString = "544023720.8763241"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "CLogReader::AddSourceBlock(const char *block, const size_t block_size)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

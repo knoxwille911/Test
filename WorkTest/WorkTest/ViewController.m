@@ -14,6 +14,7 @@
 #import "WTLoadingBanner.h"
 #import "WTRedBanner.h"
 #import "ViewController+Banners.h"
+#import "WTLoggerReader.h"
 
 static const CGFloat kViewsLeftOffset = 15;
 
@@ -191,6 +192,9 @@ static const CGFloat kViewsLeftOffset = 15;
 
 -(void)buttonTap {
     WTTransferManagerDownloadingHandler handler = [^(NSString *downloadedString, WTTransferManagerTaskState state, NSError *error) {
+        if (downloadedString.length) {
+            [injectorContainer().loggerReader addSourceBlock:downloadedString blockSize:@(downloadedString.length)];
+        }
         if (state == WTTransferManagerTaskStateRunning) {
             [self hideErrorBanner];
             [self showLoadingBanner];

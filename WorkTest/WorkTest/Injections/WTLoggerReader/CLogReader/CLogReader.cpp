@@ -8,7 +8,11 @@
 
 #include "CLogReader.hpp"
 
+#include <string.h>
+#include <stdlib.h>
+
 bool CLogReader::SetFilter(const char *filter) {
+    this->mFilter = filter;
     return true;
 }
 

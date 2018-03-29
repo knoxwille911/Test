@@ -31,8 +31,8 @@
 
 
 -(bool)getNextLine:(NSString *)line lineSize:(NSNumber *)lineSize {
-//    char *cString = [line cStringUsingEncoding:NSASCIIStringEncoding];
-//    return _logReader->GetNextLine([line UTF8String], [lineSize intValue]);
+    char *datechar = (char *)[line cStringUsingEncoding:NSASCIIStringEncoding];
+    return _logReader->GetNextLine(datechar, [lineSize intValue]);
     return YES;
 }
 

@@ -22,6 +22,8 @@ public:
     bool    GetNextLine(char *buf,           // запрос очередной найденной строки,
                         const size_t buf_size);  // buf - буфер, bufsize - максимальная длина
     // false - конец файла или ошибка
+private:
+    const char* mFilter;
 };
 
 #endif /* CLogReader_hpp */

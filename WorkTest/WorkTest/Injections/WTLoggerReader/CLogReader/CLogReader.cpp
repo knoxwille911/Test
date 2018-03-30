@@ -25,7 +25,8 @@ bool CLogReader::SetFilter(const char *filter) {
 
 
 bool CLogReader::AddSourceBlock(const char *block, const size_t block_size) {
-    ofstream myFile(kFilepath);
+
+    std::remove(this->GetFilePath());
     this->fileWriteStream.open(this->GetFilePath(), std::ios::app);
     if (this->fileWriteStream.is_open()) {
         this->fileWriteStream << block;
@@ -66,10 +67,12 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
 
 const char *CLogReader::GetFilePath() {
     char * home = getenv("HOME");
-    char * result = new char(strlen(home) + 1);
+    char * result = new char(strlen(home));
     strcpy(result, home);
     
     strcat(result,kDocuments);
     strcat(result,kFilepath);
+    
+
     return result;
 }

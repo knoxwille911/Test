@@ -18,21 +18,22 @@
 static const char *kFilepath = "workTest.txt";
 static const char *kDocuments = "/Documents/";
 
+
 bool CLogReader::SetFilter(const char *filter) {
     this->mFilter = filter;
+    std::remove(this->GetFilePath());
     return true;
 }
 
 
 bool CLogReader::AddSourceBlock(const char *block, const size_t block_size) {
 
-    std::remove(this->GetFilePath());
-    this->fileWriteStream.open(this->GetFilePath(), std::ios::app);
     if (this->fileWriteStream.is_open()) {
         this->fileWriteStream << block;
         this->fileWriteStream.close();
     }
     else {
+        this->fileWriteStream.open(this->GetFilePath(), std::ios::app);
         this->fileWriteStream << block;
         this->fileWriteStream.close();
     }
@@ -45,7 +46,7 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
         
     }
     else {
-        this->fileReadStream.open(kFilepath);
+        this->fileReadStream.open(this->GetFilePath());
         if (!this->fileReadStream) {
             
         }

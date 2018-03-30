@@ -18,6 +18,14 @@
 
 @implementation WTLoggerReader
 
+-(instancetype)init {
+    if (self = [super init]) {
+        _logReader = new CLogReader();
+    }
+    return self;
+}
+
+
 -(bool)setFilter:(NSString *)filter {
     const char *cString = [filter cStringUsingEncoding:NSASCIIStringEncoding];
     return _logReader->SetFilter(cString);

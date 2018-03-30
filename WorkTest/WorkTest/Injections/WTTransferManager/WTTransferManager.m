@@ -72,6 +72,8 @@ didCompleteWithError:(NSError *)error {
     WTTransferManagerDownloadingHandler handler = [self neededHandlerForSessionTask:dataTask];
     if (handler) {
         NSString* dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSLog(@"WTTransferManager: string downloaded %@", dataStr);
+        
         if (dataTask.countOfBytesReceived >= dataTask.countOfBytesExpectedToReceive) {
             handler(dataStr, WTTransferManagerTaskStateComplete, nil);
             [self removeHandlerForTask:dataTask];

@@ -10,11 +10,16 @@
 #define CLogReader_hpp
 
 #include <stdio.h>
+#include <fstream>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
 
 class CLogReader
 {
 public:
-    CLogReader(...);
+//    CLogReader(...);
 //    ~CLogReader(...);
     
     bool    SetFilter(const char *filter);   // установка фильтра строк, false - ошибка
@@ -24,6 +29,9 @@ public:
     // false - конец файла или ошибка
 private:
     const char* mFilter;
+    ofstream fileWriteStream;
+    ifstream fileReadStream;
+    const char * GetFilePath();
 };
 
 #endif /* CLogReader_hpp */

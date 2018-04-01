@@ -52,22 +52,17 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
     if (this->fileReadStream.eof()) {
         return false;
     }
-    char tempBuf[buf_size];
+    this->fileReadStream.getline(buf, buf_size);
     
-    //read next line
-    this->fileReadStream.getline(tempBuf, buf_size);
-    
-    if (strlen(tempBuf)) {
-        if (isStringMatchToFilter(tempBuf)) {
-            buf = new char(strlen(tempBuf) + 1);
-            strcpy(buf, tempBuf);
-//            buf = tempBuf;
+    if (strlen(buf)) {
+        if (!isStringMatchToFilter(buf)) {
+            free(buf);
         }
     }
     else {
         return false;
     }
-    std::cout << tempBuf << std::endl;
+    std::cout << buf << std::endl;
     
     return true;
 }

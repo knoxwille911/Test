@@ -47,7 +47,11 @@ static const CGFloat kViewsLeftOffset = 15;
 -(void)timerFired {
     WTLoggerReaderGetNextLineHandler handler = [^(BOOL result, NSString *line) {
         if (result && line.length) {
-            _resultTextView.text = [_resultTextView.text stringByAppendingString:line];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _resultTextView.text = [[_resultTextView.text stringByAppendingString:@"\n"] stringByAppendingString:line];
+                NSRange bottom = NSMakeRange(_resultTextView.text.length -1, 1);
+                [_resultTextView scrollRangeToVisible:bottom];
+            });
         }
     } copy];
     

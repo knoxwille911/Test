@@ -32,16 +32,25 @@
 }
 
 
--(bool)addSourceBlock:(NSString *)block blockSize:(NSNumber *)blockSize {
-    const char *cString = [block cStringUsingEncoding:NSASCIIStringEncoding];
-    return _logReader->AddSourceBlock(cString, [blockSize intValue]);
+-(void)addSourceBlock:(NSString *)block blockSize:(NSNumber *)blockSize handler:(WTLoggerReaderAddSourceHandler)handler {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        const char *cString = [block cStringUsingEncoding:NSASCIIStringEncoding];
+        BOOL result = _logReader->AddSourceBlock(cString, [blockSize intValue]);
+        if (handler) {
+            handler(result);
+        }
+    });
 }
 
 
--(bool)getNextLine:(NSString *)line lineSize:(NSNumber *)lineSize {
-    char *datechar = (char *)[line cStringUsingEncoding:NSASCIIStringEncoding];
-    return _logReader->GetNextLine(datechar, [lineSize intValue]);
-    return YES;
+-(void)getNextLine:(NSString *)line lineSize:(NSNumber *)lineSize handler:(WTLoggerReaderGetNextLineHandler)handler {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        char *datechar = (char *)[line cStringUsingEncoding:NSASCIIStringEncoding];
+        BOOL result = _logReader->GetNextLine(datechar, [lineSize intValue]);
+        if (handler) {
+            handler(result, [NSString stringWithUTF8String:datechar]);
+        }
+    });
 }
 
 @end

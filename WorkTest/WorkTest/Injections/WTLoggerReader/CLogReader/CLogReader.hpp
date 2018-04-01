@@ -28,10 +28,14 @@ public:
                         const size_t buf_size);  // buf - буфер, bufsize - максимальная длина
     // false - конец файла или ошибка
 private:
+    
+    bool isStringMatchToFilter(const char *string);
+    
     const char* mFilter;
     ofstream fileWriteStream;
     ifstream fileReadStream;
-    const char * GetFilePath();
+    void GetFilePath(char *path);
+    char filePath[256];
 };
 
 #endif /* CLogReader_hpp */

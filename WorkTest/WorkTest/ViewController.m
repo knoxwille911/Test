@@ -24,6 +24,7 @@ static const CGFloat kViewsLeftOffset = 15;
     UITextView *_resultTextView;
     UIButton *_startButton;
     UIImageView *_backgroundImageView;
+    NSTimer *_timer;
 }
 
 @end
@@ -34,6 +35,21 @@ static const CGFloat kViewsLeftOffset = 15;
     [super viewDidLoad];
     [self setupView];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+
+-(void)startTimer {
+    _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+}
+
+
+-(void)timerFired {
+    WTLoggerReaderGetNextLineHandler handler = [^(BOOL result, NSString *line) {
+
+    } copy];
+    
+    [injectorContainer().loggerReader getNextLine:@"" lineSize:@(1000) handler:handler];
 }
 
 
@@ -193,7 +209,13 @@ static const CGFloat kViewsLeftOffset = 15;
 -(void)buttonTap {
     WTTransferManagerDownloadingHandler handler = [^(NSString *downloadedString, WTTransferManagerTaskState state, NSError *error) {
         if (downloadedString.length) {
-            [injectorContainer().loggerReader addSourceBlock:downloadedString blockSize:@(downloadedString.length)];
+            WTLoggerReaderAddSourceHandler handler = [^(BOOL result) {
+                if (result) {
+                    [self startTimer];
+                }
+            } copy];
+            
+            [injectorContainer().loggerReader addSourceBlock:downloadedString blockSize:@(downloadedString.length) handler:handler];
         }
         if (state == WTTransferManagerTaskStateRunning) {
             [self hideErrorBanner];
@@ -208,6 +230,7 @@ static const CGFloat kViewsLeftOffset = 15;
             [self hideErrorBanner];
         }
     } copy];
+    [injectorContainer().loggerReader setFilter:_filterTextField.text];
     [injectorContainer().transferManager addDownloadTaskWithURL:_urlTextField.text handler:handler];
 }
 

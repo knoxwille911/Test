@@ -18,62 +18,64 @@
 static const char *kFilepath = "workTest.txt";
 static const char *kDocuments = "/Documents/";
 
+static const char *kStarSymbol = "*";
+static const char *kQuestionSymbol = "?";
 
 bool CLogReader::SetFilter(const char *filter) {
+    // check lenght
+    if (!strlen(filter)) {
+        return false;
+    }
     this->mFilter = filter;
-    std::remove(this->GetFilePath());
+    this->GetFilePath(filePath);
+    std::remove(filePath);
     return true;
 }
 
 
 bool CLogReader::AddSourceBlock(const char *block, const size_t block_size) {
-
-    if (this->fileWriteStream.is_open()) {
-        this->fileWriteStream << block;
-        this->fileWriteStream.close();
+    //if oupput stream does not open - open him
+    if (!this->fileWriteStream.is_open()) {
+        this->fileWriteStream.open(filePath, std::ios::app);
     }
-    else {
-        this->fileWriteStream.open(this->GetFilePath(), std::ios::app);
-        this->fileWriteStream << block;
-        this->fileWriteStream.close();
-    }
+    this->fileWriteStream << block;
+    this->fileWriteStream.close();
     return true;
 }
 
 
 bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
-    if (this->fileReadStream.is_open()) {
-        
+    //if input stream does not open - open him
+    if (!this->fileReadStream.is_open()) {
+        this->fileReadStream.open(filePath, std::ios::in);
     }
-    else {
-        this->fileReadStream.open(this->GetFilePath());
-        if (!this->fileReadStream) {
-            
-        }
-        else {
-            while(!this->fileReadStream.eof())
-            {
-                char *line;
-                
-                this->fileReadStream.getline(buf, buf_size);
-                
-                char * buffer = new char [buf_size];
-                this->fileReadStream.read(buffer, buf_size);
-                std::cout << buffer << std::endl;
-            }
-        }
+    if (this->fileReadStream.eof()) {
+        return false;
     }
+    char tempBuf[buf_size];
+    
+    //read next line
+    this->fileReadStream.getline(tempBuf, buf_size);
+    
+    if (isStringMatchToFilter(tempBuf)) {
+        buf = tempBuf;
+    }
+    
+    std::cout << tempBuf << std::endl;
+    
     return true;
 }
 
-const char *CLogReader::GetFilePath() {
-    char * home = getenv("HOME");
-    char * result = new char(strlen(home));
-    strcpy(result, home);
-    
-    strcat(result,kDocuments);
-    strcat(result,kFilepath);
-    
 
-    return result;
+bool CLogReader::isStringMatchToFilter(const char *string) {
+    return true;
+}
+
+
+void CLogReader::GetFilePath(char *path) {
+    char buffer[256];
+    strcpy(buffer,getenv("HOME"));
+    strcat(buffer, kDocuments);
+    strcat(buffer, kFilepath);
+    strcpy(path, buffer);
 }

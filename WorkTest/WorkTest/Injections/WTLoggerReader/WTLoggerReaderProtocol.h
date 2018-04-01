@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^WTLoggerReaderAddSourceHandler) (BOOL result);
+typedef void (^WTLoggerReaderGetNextLineHandler) (BOOL result, NSString *line);
+
 @protocol WTLoggerReaderProtocol<NSObject>
 
 -(bool)setFilter:(NSString *)filter;
--(bool)addSourceBlock:(NSString *)block blockSize:(NSNumber *)blockSize;
--(bool)getNextLine:(NSString *)line lineSize:(NSNumber *)lineSize;
+-(void)addSourceBlock:(NSString *)block blockSize:(NSNumber *)blockSize handler:(WTLoggerReaderAddSourceHandler)handler;
+-(void)getNextLine:(NSString *)line lineSize:(NSNumber *)lineSize handler:(WTLoggerReaderGetNextLineHandler)handler;
 
 @end

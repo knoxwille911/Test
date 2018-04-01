@@ -68,6 +68,16 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
 
 
 bool CLogReader::isStringMatchToFilter(const char *string) {
+    
+    while (*string) {
+        while (*mFilter) {
+            if (mFilter != string) {
+                break;
+            }
+            mFilter++;
+        }
+        string++;
+    }
     return true;
 }
 

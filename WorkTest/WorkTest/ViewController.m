@@ -46,7 +46,9 @@ static const CGFloat kViewsLeftOffset = 15;
 
 -(void)timerFired {
     WTLoggerReaderGetNextLineHandler handler = [^(BOOL result, NSString *line) {
-
+        if (result && line.length) {
+            _resultTextView.text = [_resultTextView.text stringByAppendingString:line];
+        }
     } copy];
     
     [injectorContainer().loggerReader getNextLine:@"" lineSize:@(1000) handler:handler];

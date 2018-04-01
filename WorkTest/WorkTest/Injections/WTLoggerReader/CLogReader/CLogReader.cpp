@@ -57,10 +57,16 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
     //read next line
     this->fileReadStream.getline(tempBuf, buf_size);
     
-    if (isStringMatchToFilter(tempBuf)) {
-        buf = tempBuf;
+    if (strlen(tempBuf)) {
+        if (isStringMatchToFilter(tempBuf)) {
+            buf = new char(strlen(tempBuf) + 1);
+            strcpy(buf, tempBuf);
+//            buf = tempBuf;
+        }
     }
-    
+    else {
+        return false;
+    }
     std::cout << tempBuf << std::endl;
     
     return true;
@@ -71,7 +77,7 @@ bool CLogReader::isStringMatchToFilter(const char *string) {
     
     while (*string) {
         while (*mFilter) {
-            if (mFilter != string) {
+            if (*mFilter != *string) {
                 break;
             }
             mFilter++;

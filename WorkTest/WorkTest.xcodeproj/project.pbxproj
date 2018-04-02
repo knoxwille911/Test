@@ -26,7 +26,8 @@
 		E2206BF2206CC9A200085F27 /* WTBlueBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BF1206CC9A200085F27 /* WTBlueBanner.m */; };
 		E2206BF5206CC9CB00085F27 /* UIViewController+Banners.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BF4206CC9CB00085F27 /* UIViewController+Banners.m */; };
 		E2206BF8206CCE5100085F27 /* WTLoadingBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BF7206CCE5100085F27 /* WTLoadingBanner.m */; };
-		E2206BFB206CFF6700085F27 /* ViewController+Banners.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BFA206CFF6700085F27 /* ViewController+Banners.m */; };
+		E2206BFB206CFF6700085F27 /* WTViewController+Banners.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206BFA206CFF6700085F27 /* WTViewController+Banners.m */; };
+		E28A0E0720727CC1001B4F82 /* WTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E28A0E0620727CC1001B4F82 /* WTViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,8 +88,10 @@
 		E2206BF4206CC9CB00085F27 /* UIViewController+Banners.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Banners.m"; sourceTree = "<group>"; };
 		E2206BF6206CCE5100085F27 /* WTLoadingBanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTLoadingBanner.h; sourceTree = "<group>"; };
 		E2206BF7206CCE5100085F27 /* WTLoadingBanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTLoadingBanner.m; sourceTree = "<group>"; };
-		E2206BF9206CFF6700085F27 /* ViewController+Banners.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ViewController+Banners.h"; sourceTree = "<group>"; };
-		E2206BFA206CFF6700085F27 /* ViewController+Banners.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ViewController+Banners.m"; sourceTree = "<group>"; };
+		E2206BF9206CFF6700085F27 /* WTViewController+Banners.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WTViewController+Banners.h"; sourceTree = "<group>"; };
+		E2206BFA206CFF6700085F27 /* WTViewController+Banners.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WTViewController+Banners.m"; sourceTree = "<group>"; };
+		E28A0E0520727CC1001B4F82 /* WTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTViewController.h; sourceTree = "<group>"; };
+		E28A0E0620727CC1001B4F82 /* WTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,14 +142,13 @@
 		E2206B99206B6B9500085F27 /* WorkTest */ = {
 			isa = PBXGroup;
 			children = (
+				E28A0E0420727CA0001B4F82 /* WTViewController */,
 				E2206BD3206B7ED400085F27 /* Injections */,
 				E2206BCC206B6DE800085F27 /* Utils */,
 				E2206B9A206B6B9500085F27 /* AppDelegate.h */,
 				E2206B9B206B6B9600085F27 /* AppDelegate.m */,
 				E2206B9D206B6B9600085F27 /* ViewController.h */,
 				E2206B9E206B6B9700085F27 /* ViewController.m */,
-				E2206BF9206CFF6700085F27 /* ViewController+Banners.h */,
-				E2206BFA206CFF6700085F27 /* ViewController+Banners.m */,
 				E2206BA0206B6B9700085F27 /* Main.storyboard */,
 				E2206BA3206B6B9800085F27 /* Assets.xcassets */,
 				E2206BA5206B6B9800085F27 /* LaunchScreen.storyboard */,
@@ -242,6 +244,17 @@
 				E2206BF4206CC9CB00085F27 /* UIViewController+Banners.m */,
 			);
 			path = Banners;
+			sourceTree = "<group>";
+		};
+		E28A0E0420727CA0001B4F82 /* WTViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E28A0E0520727CC1001B4F82 /* WTViewController.h */,
+				E28A0E0620727CC1001B4F82 /* WTViewController.m */,
+				E2206BF9206CFF6700085F27 /* WTViewController+Banners.h */,
+				E2206BFA206CFF6700085F27 /* WTViewController+Banners.m */,
+			);
+			path = WTViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,7 +396,8 @@
 				E2206BEC206CC76400085F27 /* WTBanner.m in Sources */,
 				E2206BAA206B6B9800085F27 /* main.m in Sources */,
 				E2206BF8206CCE5100085F27 /* WTLoadingBanner.m in Sources */,
-				E2206BFB206CFF6700085F27 /* ViewController+Banners.m in Sources */,
+				E2206BFB206CFF6700085F27 /* WTViewController+Banners.m in Sources */,
+				E28A0E0720727CC1001B4F82 /* WTViewController.m in Sources */,
 				E2206BD2206B6FE800085F27 /* WTConfiguration.m in Sources */,
 				E2206BCF206B6E0300085F27 /* UIColors+WTColors.m in Sources */,
 				E2206BD6206B7F1B00085F27 /* WTInjectorContainer.m in Sources */,

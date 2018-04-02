@@ -78,10 +78,10 @@ bool CLogReader::isStringMatchToFilter(const char *coreString) {
     bool result = false;
     
     size_t len = strlen(coreString);
-//    char *string= (char*) malloc( len + 1 );
-//    strcpy(string, coreString);
+    char *string= (char*) malloc( len + 1 );
+    strcpy(string, coreString);
 
-    const char *string = "anton anton anton";
+//    const char *string = "anton anton anton"; 
     char src = *string;
     
     while (*string) {
@@ -100,14 +100,17 @@ bool CLogReader::isStringMatchToFilter(const char *coreString) {
             src = *string;
             
             //if filter start from * continue
-            if (fil == kStarSymbol) {
-                if (src == '\0') { //end string
+            if (fil == kStarSymbol || fil == kQuestionSymbol) {
+                if (src == '\0') { //end string, means that after searched string 0, not * or ?, so this not our string
                     result = false;
                 }
                 filter++;
                 continue;
             }
             
+            if (fil == kQuestionSymbol) {
+                
+            }
             //if characters is not equal  stop cirkle
             if (!this->isCharsEqual(src, fil)) {
                 result = false;

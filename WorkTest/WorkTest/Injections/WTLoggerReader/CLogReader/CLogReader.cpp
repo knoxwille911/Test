@@ -18,15 +18,21 @@
 static const char *kFilepath = "workTest.txt";
 static const char *kDocuments = "/Documents/";
 
-static const char *kStarSymbol = "*";
-static const char *kQuestionSymbol = "?";
+static const char kStarSymbol = '*';
+static const char kQuestionSymbol = '?';
 
 bool CLogReader::SetFilter(const char *filter) {
     // check lenght
     if (!strlen(filter)) {
         return false;
     }
-    this->mFilter = filter;
+    
+    size_t len = strlen(filter);
+    mFilter = (char*) malloc( len + 1 );
+    strcpy(mFilter, filter);
+    
+    this->setFilterType();
+    
     this->GetFilePath(filePath);
     std::remove(filePath);
     return true;
@@ -56,30 +62,74 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
     
     if (strlen(buf)) {
         if (!isStringMatchToFilter(buf)) {
-            free(buf);
+            buf = nullptr;
+        }
+        else {
+            std::cout << buf << std::endl;
+            return true;
         }
     }
-    else {
-        return false;
-    }
-    std::cout << buf << std::endl;
-    
-    return true;
+    return false;
 }
 
 
-bool CLogReader::isStringMatchToFilter(const char *string) {
+bool CLogReader::isStringMatchToFilter(const char *coreString) {
+    
+    bool result = false;
+    
+    size_t len = strlen(coreString);
+//    char *string= (char*) malloc( len + 1 );
+//    strcpy(string, coreString);
+
+    const char *string = "anton anton anton";
+    char src = *string;
     
     while (*string) {
-        while (*mFilter) {
-            if (*mFilter != *string) {
+        //get next char from source string
+        src = *string;
+        
+        //copy filter string
+        len = strlen(mFilter);
+        char *filter= (char*) malloc( len + 1 );
+        strcpy(filter, mFilter);
+        
+        while (*filter) {
+            
+            //get next filter char
+            char fil = *filter;
+            src = *string;
+            
+            //if filter start from * continue
+            if (fil == kStarSymbol) {
+                if (src == '\0') { //end string
+                    result = false;
+                }
+                filter++;
+                continue;
+            }
+            
+            //if characters is not equal  stop cirkle
+            if (!this->isCharsEqual(src, fil)) {
+                result = false;
                 break;
             }
-            mFilter++;
+            // if we here continue search by filter in source
+            filter++;
+            string++;
+            result = true;
+        }
+        if (result) {
+            break;
         }
         string++;
     }
-    return true;
+    return result;
+}
+
+
+bool CLogReader::isCharsEqual(char a, char b) {
+    bool result = a == b;
+    return result;
 }
 
 
@@ -89,4 +139,41 @@ void CLogReader::GetFilePath(char *path) {
     strcat(buffer, kDocuments);
     strcat(buffer, kFilepath);
     strcpy(path, buffer);
+}
+
+//enum class matchFilterType : int
+//{
+//    matchfilterTypeNone,
+//    matchfilterTypeStarInStart,
+//    matchfilterTypeStarInEnd,
+//    matchfilterTypeStatInBoth,
+//    matchfilterTypeQuestInStart,
+//    matchfilterTypeQuestInEnd,
+//    matchfilterTypeQuestInBoth,
+//    matchfilterTypeSimpleMatch
+//};
+void CLogReader::setFilterType() {
+//    while (*mFilter) {
+//        char currentSymbol = *mFilter;
+//        if (filterType == matchFilterType::matchfilterTypeNone) {
+//            if (currentSymbol == kStarSymbol) {
+//                filterType = matchFilterType::matchfilterTypeStarInStart;
+//            }
+//            else if (currentSymbol == kQuestionSymbol) {
+//                filterType = matchFilterType::matchfilterTypeQuestInStart;
+//            }
+//            else {
+//                filterType = matchFilterType::matchfilterTypeSimpleMatch;
+//            }
+//        }
+//        else {
+//            if (filterType == matchFilterType::matchfilterTypeStarInStart) {
+//                filterType = matchFilterType::matchfilterTypeStatInBoth;
+//            }
+//            else if (filterType == matchFilterType::matchfilterTypeQuestInStart) {
+//                filterType = matchFilterType::matchfilterTypeQuestInBoth;
+//            }
+//        }
+//        mFilter++;
+//    }
 }

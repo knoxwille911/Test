@@ -16,6 +16,18 @@
 
 using namespace std;
 
+enum class matchFilterType : int
+{
+    matchfilterTypeNone,
+    matchfilterTypeStarInStart,
+    matchfilterTypeStarInEnd,
+    matchfilterTypeStatInBoth,
+    matchfilterTypeQuestInStart,
+    matchfilterTypeQuestInEnd,
+    matchfilterTypeQuestInBoth,
+    matchfilterTypeSimpleMatch
+};
+
 class CLogReader
 {
 public:
@@ -30,12 +42,15 @@ public:
 private:
     
     bool isStringMatchToFilter(const char *string);
+    bool isCharsEqual(char a, char b);
+    void setFilterType();
     
-    const char* mFilter;
+    char* mFilter;
     ofstream fileWriteStream;
     ifstream fileReadStream;
     void GetFilePath(char *path);
     char filePath[256];
+    matchFilterType filterType;
 };
 
 #endif /* CLogReader_hpp */

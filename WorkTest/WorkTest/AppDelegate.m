@@ -17,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:[ViewController new]];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:[[ViewController new] autorelease]];
     self.window.rootViewController = navController;
     return YES;
 }

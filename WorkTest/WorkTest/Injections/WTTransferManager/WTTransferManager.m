@@ -41,7 +41,8 @@
 
 
 -(void)addDownloadTaskWithURL:(NSString *)url handler:(WTTransferManagerDownloadingHandler)handler {
-    NSURLSessionDataTask *dataTask = [_session dataTaskWithRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
+    NSURLRequest *request = [[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]] autorelease];
+    NSURLSessionDataTask *dataTask = [_session dataTaskWithRequest:request];
     [_activeTasks addObject:dataTask];
     [_handlers setObject:handler forKey:@(dataTask.taskIdentifier)];
     
@@ -71,7 +72,7 @@ didCompleteWithError:(NSError *)error {
 -(void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     WTTransferManagerDownloadingHandler handler = [self neededHandlerForSessionTask:dataTask];
     if (handler) {
-        NSString* dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSString* dataStr = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
         NSLog(@"WTTransferManager: string downloaded %@", dataStr);
         
         if (dataTask.countOfBytesReceived >= dataTask.countOfBytesExpectedToReceive) {

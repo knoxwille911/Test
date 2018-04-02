@@ -26,6 +26,9 @@ bool CLogReader::SetFilter(const char *filter) {
     if (!strlen(filter)) {
         return false;
     }
+    if (mFilter) {
+        free(mFilter);
+    }
     
     size_t len = strlen(filter);
     mFilter = (char*) malloc( len + 1 );
@@ -78,20 +81,23 @@ bool CLogReader::isStringMatchToFilter(const char *coreString) {
     bool result = false;
     
     size_t len = strlen(coreString);
-    char *string= (char*) malloc( len + 1 );
-    strcpy(string, coreString);
-
-//    const char *string = "anton anton anton"; 
-    char src = *string;
+    char *stringCopy = nullptr;
+    stringCopy = static_cast<char *>(realloc(stringCopy, len + 1));
+    strncpy(stringCopy, coreString, len);
+    
+    char *string = stringCopy;
+//    free(string);
+//    const char *string = "anton anton anton";
+    char src;
     
     while (*string) {
         //get next char from source string
-        src = *string;
-        
         //copy filter string
         len = strlen(mFilter);
-        char *filter= (char*) malloc( len + 1 );
-        strcpy(filter, mFilter);
+        char *filterCopy= (char*) malloc( len + 1 );//leak
+        strcpy(filterCopy, mFilter);
+        
+        char *filter = filterCopy;
         
         while (*filter) {
             
@@ -121,11 +127,15 @@ bool CLogReader::isStringMatchToFilter(const char *coreString) {
             string++;
             result = true;
         }
+
+        free(filterCopy);
+        
         if (result) {
             break;
         }
         string++;
     }
+    free(stringCopy);
     return result;
 }
 

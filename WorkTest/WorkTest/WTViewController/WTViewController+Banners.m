@@ -17,7 +17,7 @@
     if ([self.banner isKindOfClass:[WTLoadingBanner class]]) {
         return;
     }
-    WTLoadingBanner *loadingBanner = [[WTLoadingBanner alloc] initWithFrame:CGRectZero text:NSLocalizedString(@"Parsing in progress", @"Parsing in progress")];
+    WTLoadingBanner *loadingBanner = [[[WTLoadingBanner alloc] initWithFrame:CGRectZero text:NSLocalizedString(@"Parsing in progress", @"Parsing in progress")] autorelease];
     [self showBanner:loadingBanner autoHiding:NO];
 }
 
@@ -28,7 +28,7 @@
 
 
 -(void)showErrorBanner {
-    WTRedBanner *errorBanner = [[WTRedBanner alloc] initWithFrame:CGRectZero text:NSLocalizedString(@"Parsing in progress", @"Parsing in progress")];
+    WTRedBanner *errorBanner = [[[WTRedBanner alloc] initWithFrame:CGRectZero text:NSLocalizedString(@"Somethink went wrong", @"Somethink went wrong")] autorelease];
     [self showBanner:errorBanner autoHiding:YES];
 }
 

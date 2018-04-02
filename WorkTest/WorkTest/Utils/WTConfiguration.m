@@ -11,7 +11,7 @@
 @implementation WTConfiguration
 
 +(NSString *)textDownloadDefaultURL {
-    return @"http://www.sample-videos.com/text/Sample-text-file-10kb.txt";
+    return @"https://github.com/dscape/spell/raw/master/test/resources/big.txt";
 }
 
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1ED098382072C3DB0095982E /* WTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E28A0E0620727CC1001B4F82 /* WTViewController.m */; };
 		E2206B9C206B6B9600085F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206B9B206B6B9600085F27 /* AppDelegate.m */; };
 		E2206B9F206B6B9700085F27 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2206B9E206B6B9700085F27 /* ViewController.m */; };
 		E2206BA2206B6B9700085F27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2206BA0206B6B9700085F27 /* Main.storyboard */; };
@@ -414,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2206BB4206B6B9800085F27 /* WorkTestTests.m in Sources */,
+				1ED098382072C3DB0095982E /* WTViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

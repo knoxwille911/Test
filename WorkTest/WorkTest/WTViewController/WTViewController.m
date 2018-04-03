@@ -55,7 +55,7 @@ static const CGFloat kViewsLeftOffset = 15;
     WTLoggerReaderGetNextLineHandler handler = [[^(BOOL result, NSString *line) {
         if (result && line.length) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf->_resultTextView.text = [[weakSelf->_resultTextView.text stringByAppendingString:@"\n"] stringByAppendingString:line];
+                weakSelf->_resultTextView.text = [[weakSelf->_resultTextView.text stringByAppendingString:@"\n\n"] stringByAppendingString:line];
                 NSRange bottom = NSMakeRange(weakSelf->_resultTextView.text.length -1, 1);
                 [weakSelf->_resultTextView scrollRangeToVisible:bottom];
             });
@@ -67,7 +67,7 @@ static const CGFloat kViewsLeftOffset = 15;
 
 -(void)setupView {
     
-    _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Background-menu"]];
+    _backgroundImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Background-menu"]] autorelease];
     _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_backgroundImageView];
     
@@ -97,7 +97,7 @@ static const CGFloat kViewsLeftOffset = 15;
     [urlLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:kViewsLeftOffset].active = YES;
     
     _urlTextField = [[UITextField new] autorelease];
-    UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 5.f, 0.f)];
+    UIView *indentView = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 5.f, 0.f)] autorelease];
     indentView.backgroundColor = UIColor.clearColor;
     _urlTextField.leftView = indentView;
     _urlTextField.delegate = self;
@@ -136,7 +136,7 @@ static const CGFloat kViewsLeftOffset = 15;
     [label.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:kViewsLeftOffset].active = YES;
     
     _filterTextField = [[UITextField new] autorelease];
-    UIView *indentView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 5.f, 0.f)];
+    UIView *indentView = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 5.f, 0.f)] autorelease];
     indentView.backgroundColor = UIColor.clearColor;
     _filterTextField.leftView = indentView;
     _filterTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -222,7 +222,6 @@ static const CGFloat kViewsLeftOffset = 15;
     __unsafe_unretained WTViewController *weakSelf = self;
     __block WTTransferManagerDownloadingHandler handler = [[^(NSString *downloadedString, WTTransferManagerTaskState state, NSError *error) {
         if (downloadedString.length) {
-//            __unsafe_unretained WTViewController *weakWeakSelf = weakSelf;
             __block WTLoggerReaderAddSourceHandler handler = [[^(BOOL result) {
                 if (result) {
                     [weakSelf startTimer];

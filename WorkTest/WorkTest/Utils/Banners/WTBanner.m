@@ -49,4 +49,9 @@ CGFloat const kWPBannerHeight = 24;
     return nil;
 }
 
+-(void)dealloc {
+    [self.textLabel release];
+    [super dealloc];
+}
+
 @end

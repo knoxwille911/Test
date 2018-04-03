@@ -59,12 +59,17 @@
 -(void)URLSession:(NSURLSession *)session
              task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error {
+    WTTransferManagerDownloadingHandler handler = [self neededHandlerForSessionTask:task];
     if (error) {
-        WTTransferManagerDownloadingHandler handler = [self neededHandlerForSessionTask:task];
         if (handler) {
             handler(nil, WTTransferManagerTaskStateError, error);
         }
         [self removeHandlerForTask:task];
+    }
+    else {
+        if (handler) {
+            handler(nil, WTTransferManagerTaskStateComplete, error);
+        }
     }
 }
 
@@ -74,14 +79,7 @@ didCompleteWithError:(NSError *)error {
     if (handler) {
         NSString* dataStr = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
         NSLog(@"WTTransferManager: string downloaded %@", dataStr);
-        
-        if (dataTask.countOfBytesReceived >= dataTask.countOfBytesExpectedToReceive) {
-            handler(dataStr, WTTransferManagerTaskStateComplete, nil);
-            [self removeHandlerForTask:dataTask];
-        }
-        else {
-            handler(dataStr, WTTransferManagerTaskStateRunning, nil);
-        }
+        handler(dataStr, WTTransferManagerTaskStateRunning, nil);
     }
 }
 

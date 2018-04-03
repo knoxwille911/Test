@@ -14,8 +14,8 @@ extern CGFloat const kWPBannerHeight;
 
 -(instancetype)initWithFrame:(CGRect)frame text:(NSString *)text;
 
-@property (nonatomic, strong) NSString *text;
-@property (nonatomic, strong) UILabel *textLabel;
+@property (nonatomic, retain) NSString *text;
+@property (nonatomic, retain) UILabel *textLabel;
 
 -(void)setupView;
 

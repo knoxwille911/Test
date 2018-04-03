@@ -99,6 +99,7 @@
 		E28A0E092073AAFD001B4F82 /* WTView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTView.m; sourceTree = "<group>"; };
 		E28A0E0C2073AB17001B4F82 /* WTViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTViewModel.h; sourceTree = "<group>"; };
 		E28A0E0D2073AB17001B4F82 /* WTViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTViewModel.m; sourceTree = "<group>"; };
+		E28A0E0F2073C33E001B4F82 /* WTViewModelDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTViewModelDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +262,7 @@
 				E28A0E0620727CC1001B4F82 /* WTViewController.m */,
 				E2206BF9206CFF6700085F27 /* WTViewController+Banners.h */,
 				E2206BFA206CFF6700085F27 /* WTViewController+Banners.m */,
+				E28A0E0F2073C33E001B4F82 /* WTViewModelDelegate.h */,
 			);
 			path = WTViewController;
 			sourceTree = "<group>";

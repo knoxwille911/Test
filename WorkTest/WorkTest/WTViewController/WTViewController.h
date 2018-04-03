@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WTViewModelDelegate.h"
 
-@interface WTViewController : UIViewController
+@interface WTViewController : UIViewController<WTViewModelDelegate>
 
 @end

@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WTViewModel : NSObject
+@protocol WTViewModelDelegate;
+
+@interface WTViewModel : NSObject<UITextFieldDelegate>
+
+-(instancetype)initWithDelegate:(id<WTViewModelDelegate>)delegate;
+
+-(void)attachToViewController:(UIViewController *)viewController;
+-(void)viewControllerWillDissapear;
+
+-(void)buttonTap;
 
 @end

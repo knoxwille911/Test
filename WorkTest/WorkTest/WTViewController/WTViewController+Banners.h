@@ -11,9 +11,4 @@
 
 @interface WTViewController (Banners)
 
--(void)showLoadingBanner;
--(void)hideLoadingBanner;
--(void)showErrorBanner;
--(void)hideErrorBanner;
-
 @end

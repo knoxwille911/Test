@@ -13,7 +13,7 @@
 
 @implementation WTViewController (Banners)
 
--(void)showLoadingBanner {
+-(void)showLoading {
     if ([self.banner isKindOfClass:[WTLoadingBanner class]]) {
         return;
     }
@@ -22,18 +22,18 @@
 }
 
 
--(void)hideLoadingBanner {
+-(void)hideLoading {
     [self hideBanner];
 }
 
 
--(void)showErrorBanner {
+-(void)showError {
     WTRedBanner *errorBanner = [[[WTRedBanner alloc] initWithFrame:CGRectZero text:NSLocalizedString(@"Somethink went wrong", @"Somethink went wrong")] autorelease];
     [self showBanner:errorBanner autoHiding:YES];
 }
 
 
--(void)hideErrorBanner {
+-(void)hideError {
     if (![self.banner isKindOfClass:[WTRedBanner class]]) {
         return;
     }

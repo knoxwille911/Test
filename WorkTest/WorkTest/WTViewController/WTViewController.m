@@ -9,9 +9,9 @@
 #import "WTViewController.h"
 #import "WTViewModel.h"
 #import "WTViewModelDelegate.h"
+#import "WTViewController+Banners.h"
 
 @interface WTViewController () {
-    
     WTViewModel *_viewModel;
 }
 
@@ -33,22 +33,22 @@
 
 
 -(void)showLoadingBanner {
-    [self showLoadingBanner];
+    [self showLoading];
 }
 
 
 -(void)hideLoadingBanner {
-    [self hideLoadingBanner];
+    [self hideLoading];
 }
 
 
 -(void)showErrorBanner {
-    [self showErrorBanner];
+    [self showError];
 }
 
 
 -(void)hideErrorBanner {
-    [self hideErrorBanner];
+    [self hideError];
 }
 
 

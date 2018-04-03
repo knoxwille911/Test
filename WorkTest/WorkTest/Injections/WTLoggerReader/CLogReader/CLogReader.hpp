@@ -16,18 +16,6 @@
 
 using namespace std;
 
-enum class matchFilterType : int
-{
-    matchfilterTypeNone,
-    matchfilterTypeStarInStart,
-    matchfilterTypeStarInEnd,
-    matchfilterTypeStatInBoth,
-    matchfilterTypeQuestInStart,
-    matchfilterTypeQuestInEnd,
-    matchfilterTypeQuestInBoth,
-    matchfilterTypeSimpleMatch
-};
-
 class CLogReader
 {
 public:
@@ -50,7 +38,6 @@ private:
     ifstream fileReadStream;
     void GetFilePath(char *path);
     char filePath[256];
-    matchFilterType filterType;
 };
 
 #endif /* CLogReader_hpp */

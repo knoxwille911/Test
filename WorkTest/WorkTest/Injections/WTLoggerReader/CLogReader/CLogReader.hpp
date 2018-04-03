@@ -29,7 +29,7 @@ public:
     // false - конец файла или ошибка
 private:
     
-    bool isStringMatchToFilter(const char *string);
+    bool isStringMathWithFilter(const char *string);
     bool isCharsEqual(char a, char b);
     void setFilterType();
     

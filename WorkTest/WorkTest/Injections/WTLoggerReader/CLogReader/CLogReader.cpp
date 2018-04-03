@@ -62,7 +62,7 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
     this->fileReadStream.getline(buf, buf_size);
     
     if (strlen(buf)) {
-        if (!isStringMatchToFilter(buf)) {
+        if (!this->isStringMathWithFilter(buf)) {
             buf = nullptr;
         }
         else {
@@ -74,58 +74,43 @@ bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
 }
 
 
-bool CLogReader::isStringMatchToFilter(const char *coreString) {
-    size_t len = strlen(coreString);
-    char *stringCopy = nullptr;
-    stringCopy = static_cast<char *>(realloc(stringCopy, len + 1));
-    strncpy(stringCopy, coreString, len);
-    
-//    char *string = stringCopy;
-//    free(string);
-    const char *string = "anton";
-    char src;
-    char fil;
+bool CLogReader::isStringMathWithFilter(const char *coreString) {
+    const char *stringCopy = coreString;
+    char *filterCopy = mFilter;
     char lastFilterSymbol;
-    len = strlen(mFilter);
-    char *filterCopy= (char*) malloc( len + 1 );
-    strcpy(filterCopy, mFilter);
-    
-    char *filter = filterCopy;
-    
-    //prematch
 
-    while (*string && *filter != kStarSymbol) {
-        if (!this->isCharsEqual(*string, *filter)) {
+    //prematch
+    while (*coreString && *this->mFilter != kStarSymbol) {
+        if (!this->isCharsEqual(*coreString, *this->mFilter)) {
+            this->mFilter = filterCopy;
             return false;
         }
-        string++;
-        filter++;
+        coreString++;
+        mFilter++;
     }
-    while (*string) {
-        src = *string;
-        fil = *filter;
-        
-
-        if (fil == kStarSymbol) {
-            if (*++filter == '\0') {
+    while (*coreString) {
+        if (*mFilter == kStarSymbol) {
+            if (*++mFilter == '\0') {
+                this->mFilter = filterCopy;
                 return true;
             }
-            lastFilterSymbol = *filter;
-            string++;
+            lastFilterSymbol = *this->mFilter;
+            coreString++;
             continue;
         }
-        if (this->isCharsEqual(src, fil)) {
-            string++;
-            filter++;
+        if (this->isCharsEqual(*coreString, *this->mFilter)) {
+            coreString++;
+            this->mFilter++;
         }
         else {
-            string++;
+            this->mFilter = filterCopy;
+            coreString++;
         }
     }
-    bool result = strlen(filter) ? false : true;
-    
-    free(filterCopy);
-    free(stringCopy);
+    bool result = strlen(this->mFilter) ? false : true;
+
+    coreString = stringCopy;
+    this->mFilter = filterCopy;
     return result;
 }
 

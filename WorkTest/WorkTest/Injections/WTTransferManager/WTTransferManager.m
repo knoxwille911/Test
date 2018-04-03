@@ -107,4 +107,13 @@ didCompleteWithError:(NSError *)error {
     return nil;
 }
 
+
+-(void)cancelAllTasks {
+    [_activeTasks enumerateObjectsUsingBlock:^(NSURLSessionTask * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj cancel];
+    }];
+    [_activeTasks removeAllObjects];
+    [_handlers removeAllObjects];
+}
+
 @end

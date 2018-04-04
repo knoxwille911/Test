@@ -133,9 +133,10 @@ bool CLogReader::isCharsEqual(char a, char b) {
 
 
 void CLogReader::GetFilePath(char *path) {
-    char buffer[256];
-    strcpy(buffer,getenv("HOME"));
-    strcat(buffer, kDocuments);
-    strcat(buffer, kFilepath);
-    strcpy(path, buffer);
+    size_t len = strlen(getenv("HOME"));
+    this->filePath =  (char*) malloc( len + strlen(kDocuments) + strlen(kFilepath) + 1);
+    
+    strcpy(this->filePath,getenv("HOME"));
+    strcat(this->filePath, kDocuments);
+    strcat(this->filePath, kFilepath);
 }

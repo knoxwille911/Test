@@ -17,6 +17,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:[[ViewController new] autorelease]];
     self.window.rootViewController = navController;
     return YES;

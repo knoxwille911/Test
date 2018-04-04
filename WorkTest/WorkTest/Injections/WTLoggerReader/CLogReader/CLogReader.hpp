@@ -36,7 +36,7 @@ private:
     ofstream fileWriteStream;
     ifstream fileReadStream;
     void GetFilePath(char *path);
-    char filePath[256];
+    char *filePath;
 };
 
 #endif /* CLogReader_hpp */

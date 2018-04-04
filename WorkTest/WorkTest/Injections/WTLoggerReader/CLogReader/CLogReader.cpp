@@ -26,13 +26,16 @@ bool CLogReader::SetFilter(const char *filter) {
     if (!strlen(filter)) {
         return false;
     }
-    if (mFilter) {
-        free(mFilter);
-    }
+//    if (mFilter) {
+//        free(mFilter);
+//    }
     
     size_t len = strlen(filter);
     mFilter = (char*) malloc( len + 1 );
     strcpy(mFilter, filter);
+    
+    this->fileWriteStream.close();
+    this->fileReadStream.close();
     
     this->GetFilePath(filePath);
     std::remove(filePath);
@@ -42,6 +45,7 @@ bool CLogReader::SetFilter(const char *filter) {
 
 bool CLogReader::AddSourceBlock(const char *block, const size_t block_size) {
     //if oupput stream does not open - open him
+    //we need to save data to file because txt file can be huge
     if (!this->fileWriteStream.is_open()) {
         this->fileWriteStream.open(filePath, std::ios::app);
     }
@@ -53,24 +57,30 @@ bool CLogReader::AddSourceBlock(const char *block, const size_t block_size) {
 
 bool CLogReader::GetNextLine(char *buf, const size_t buf_size) {
     //if input stream does not open - open him
+    
+    
     if (!this->fileReadStream.is_open()) {
         this->fileReadStream.open(filePath, std::ios::in);
+//        this->fileReadStream.ignore(buf_size, '\r');
     }
     if (this->fileReadStream.eof()) {
+        //file is ended
         return false;
     }
-    this->fileReadStream.getline(buf, buf_size);
     
+    this->fileReadStream.getline(buf, buf_size);
+    this->fileReadStream.clear();
     if (strlen(buf)) {
         if (!this->isStringMathWithFilter(buf)) {
-            buf = nullptr;
+            //just to mark that is not our string
+            buf[0] = '\0';
         }
         else {
+            std::cout << "matching:" << std::endl;
             std::cout << buf << std::endl;
-            return true;
         }
     }
-    return false;
+    return true;
 }
 
 
@@ -78,6 +88,7 @@ bool CLogReader::isStringMathWithFilter(const char *coreString) {
     const char *stringCopy = coreString;
     char *filterCopy = mFilter;
     char lastFilterSymbol;
+
 
     //prematch
     while (*coreString && *this->mFilter != kStarSymbol) {
@@ -95,10 +106,10 @@ bool CLogReader::isStringMathWithFilter(const char *coreString) {
                 return true;
             }
             lastFilterSymbol = *this->mFilter;
-            coreString++;
+//            coreString++;
             continue;
         }
-        if (this->isCharsEqual(*coreString, *this->mFilter)) {
+        else if (this->isCharsEqual(*coreString, *this->mFilter)) {
             coreString++;
             this->mFilter++;
         }

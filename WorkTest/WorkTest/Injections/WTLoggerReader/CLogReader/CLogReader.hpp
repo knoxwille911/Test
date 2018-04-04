@@ -31,7 +31,6 @@ private:
     
     bool isStringMathWithFilter(const char *string);
     bool isCharsEqual(char a, char b);
-    void setFilterType();
     
     char* mFilter;
     ofstream fileWriteStream;

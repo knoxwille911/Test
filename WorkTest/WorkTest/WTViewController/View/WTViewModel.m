@@ -68,16 +68,27 @@
 
 
 -(void)startTimer {
-    _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+    //timer needs to triger asking parser for next string
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                     target:self
+                                                   selector:@selector(timerFired)
+                                                   userInfo:nil repeats:YES];
+    
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
 
 -(void)timerFired {
-    __unsafe_unretained WTViewModel *weakSelf = self;
+    __block WTViewModel *weakSelf = self;
     WTLoggerReaderGetNextLineHandler handler = [[^(BOOL result, NSString *line) {
         if (!result) {
-            [weakSelf->_delegate hideLoadingBanner];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf->_delegate hideLoadingBanner];
+            });
         }
         if (result && line.length) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -87,41 +98,52 @@
             });
         }
     } copy] autorelease];
-    [injectorContainer().loggerReader getNextLine:@"" lineSize:@(1000) handler:handler];
+    [injectorContainer().loggerReader getNextLine:@"" lineSize:@(4096) handler:handler];
 }
 
 
 -(void)buttonTap {
-    __unsafe_unretained WTViewModel *weakSelf = self;
+    _view.resultTextView.text = @"";
+    [injectorContainer().transferManager cancelAllTasks];
+    
+    __block WTViewModel *weakSelf = self;
     __block WTTransferManagerDownloadingHandler handler = [[^(NSString *downloadedString, WTTransferManagerTaskState state, NSError *error) {
+        //parse file while downloading process
         if (downloadedString.length) {
             __block WTLoggerReaderAddSourceHandler handler = [[^(BOOL result) {
                 if (result) {
-                    [weakSelf startTimer];
+                    
                 }
             } copy] autorelease];
             [injectorContainer().loggerReader addSourceBlock:downloadedString blockSize:@(downloadedString.length) handler:handler];
         }
-        if (state == WTTransferManagerTaskStateRunning) {
-            [weakSelf->_delegate hideErrorBanner];
-            [weakSelf->_delegate showLoadingBanner];
-        }
-        if (state == WTTransferManagerTaskStateError) {
-            [weakSelf->_delegate hideLoadingBanner];
-            [weakSelf->_delegate showErrorBanner];
-        }
-        if (state == WTTransferManagerTaskStateComplete) {
-            [weakSelf->_delegate hideLoadingBanner];
-        }
+        //show banners if needed
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (state == WTTransferManagerTaskStateRunning) {
+                [weakSelf->_delegate hideErrorBanner];
+                [weakSelf->_delegate showLoadingBanner];
+            }
+            if (state == WTTransferManagerTaskStateError) {
+                [weakSelf->_delegate hideLoadingBanner];
+                [weakSelf->_delegate showErrorBanner];
+            }
+            if (state == WTTransferManagerTaskStateReady) {
+                [weakSelf startTimer];
+            }
+        });
     } copy] autorelease];
     
+    //set filter to parser
     [injectorContainer().loggerReader setFilter:_view.filterTextField.text];
+    
+    //start download
     [injectorContainer().transferManager addDownloadTaskWithURL:_view.urlTextField.text handler:handler];
 }
 
 
 -(void)viewControllerWillDissapear {
     [_timer invalidate];
+    _timer = nil;
     [injectorContainer().transferManager cancelAllTasks];
 }
 

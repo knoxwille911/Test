@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "WTLoggerReaderProtocol.h"
 
+/*
+ * wrapper for c++ logreader
+ */
+
 @interface WTLoggerReader : NSObject<WTLoggerReaderProtocol>
 
 @end

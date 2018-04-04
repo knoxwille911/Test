@@ -52,7 +52,10 @@
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     completionHandler(NSURLSessionResponseAllow);
-    
+    WTTransferManagerDownloadingHandler handler = [self neededHandlerForSessionTask:dataTask];
+    if (handler) {
+        handler(nil, WTTransferManagerTaskStateReady, nil);
+    }
 }
 
 

@@ -45,10 +45,16 @@
 
 -(void)getNextLine:(NSString *)line lineSize:(NSNumber *)lineSize handler:(WTLoggerReaderGetNextLineHandler)handler {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        char str[lineSize.intValue];
-        BOOL result = _logReader->GetNextLine(str, [lineSize intValue]);
-        if (handler && result) {
-            handler(result, [NSString stringWithUTF8String:str]);
+        @autoreleasepool {
+            char str[lineSize.intValue];
+            BOOL result = _logReader->GetNextLine(str, [lineSize intValue]);
+                
+            if (*str != '\0') {
+                NSString *nsstring = [NSString stringWithUTF8String:str];
+                if (handler) {
+                    handler(result, nsstring);
+                }
+            }
         }
     });
 }

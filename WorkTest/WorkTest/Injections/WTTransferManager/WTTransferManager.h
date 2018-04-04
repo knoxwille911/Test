@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "WTTransferManagerProtocol.h"
 
+/*
+ * transfer manager just for downloading files
+ */
+
 @protocol WTTransferManagerInjection<NSObject> // just for future
 
 @end
